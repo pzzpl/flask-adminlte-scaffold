@@ -1,5 +1,5 @@
 //全局变量
-var apiBaseUrl = '/api';
+var apiBaseUrl = '/';
 
 $(function () {
     //初始化共公界面元素
@@ -69,7 +69,8 @@ function restTemplate(httpMethod, svcName, jsInObj, callback) {
     }
     $.ajax({
         type: httpMethod,
-        url: apiBaseUrl + svcName,
+        // url: apiBaseUrl + svcName,
+        url:  svcName,
         data: jsInObj,
         datatype: "json",
         contentType: "application/json; charset=utf-8",

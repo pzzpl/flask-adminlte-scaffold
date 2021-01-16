@@ -1,53 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}通知方式查询{% endblock %}
+{% block title %}专业列表{% endblock %}
 {% block navbar %}
 <section class="content-header">
-    <h1>课程</h1>
+    <h1>专业</h1>
     <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> 当前位置</li>
-        {#<li class="active">通知方式管理</li>#}
-        <li class="active">课程列表</li>
+        <li class="active">专业列表</li>
     </ol>
 </section>
 {% endblock %}
 
 {% block content %}
+     <div class="row">
+      <div class="col-lg-6">
+        <div class="input-group">
+          <input id="searchBar" type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
 <div class="box box-primary">
+
+   {# <div class="row">
+      <div class="col-lg-6">
+        <div class="input-group">
+          <input id="searchBar" type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+#}
+
     <div class="box-header with-border">
         {% include 'message.html' %}
     </div>
 
-    <div class="box-body">
+    <div class="box-body ">
         {% if form%}
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped table-hover">
             <tr>
                 <th>ID</th>
-                <th>课程名称</th>
-                <th>课程描述</th>
-                <th>任课老师</th>
-                <th>公告</th>
-                <th>开始时间</th>
-                <th>结束时间</th>
+                <th>专业名称</th>
+
             </tr>
             {% for row in form.content %}
             <tr>
                 <td>{{row.id}}</td>
-                <td>{{row.notify_type}}</td>
-                <td>{{row.notify_name}}</td>
-                <td>{{row.notify_number}}</td>
-                <td>
-                    {% if row.status %}
-                    <input type="checkbox" data-id="{{row.id}}" class="status" data-on-text="生效" data-off-text="失效"
-                           data-size="mini" checked>
-                    {% else %}
-                    <input type="checkbox" data-id="{{row.id}}" class="status" data-on-text="生效" data-off-text="失效"
-                           data-size="mini">
-                    {% endif %}
-                </td>
-                <td><a class='fa fa-lg fa-edit text-light-blue'
-                       href='{{ url_for("main.notifyedit", id=row.id) }}'></a></td>
-                <td><a class='fa fa-lg fa-warning text-red' href='?action=del&id={{row.id}}'></a></td>
+                <td>{{row.major_name}}</td>
             </tr>
             {% endfor %}
         </table>
@@ -92,5 +96,13 @@
             $($(switchBox)).bootstrapSwitch("state", status);
         });
     }
+    $(".btn-default").click(function () {
+
+        var criteria = $("#searchBar").val();
+        {#alert(criteria);#}
+        restTemplate("GET", "/major/search/"+criteria, null, function (data) {
+            $(".box-primary").html(data);
+        });
+    })
 </script>
 {% endblock %}

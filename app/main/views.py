@@ -7,6 +7,7 @@ from app.models import CfgNotify
 from app.main.forms import CfgNotifyForm
 from . import main
 
+from manage import  app
 logger = get_logger(__name__)
 cfg = get_config()
 

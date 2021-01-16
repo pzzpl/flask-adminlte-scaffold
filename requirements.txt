@@ -4,3 +4,5 @@ flask
 flask-script
 flask-wtf
 flask-login
+pandas
+xlrd
