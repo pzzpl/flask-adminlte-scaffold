@@ -11,7 +11,7 @@ class Config:
     DB_DATABASE = 'data36'
     ITEMS_PER_PAGE = 10
     JWT_AUTH_URL_RULE = '/api/auth'
-
+    DOWNLOAD_DIR = 'tpldir'
     @staticmethod
     def init_app(app):
         pass

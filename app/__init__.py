@@ -9,7 +9,7 @@ login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 
-fileConfig('conf/log-app.conf')
+# fileConfig('conf/log-app.conf')
 
 def get_logger(name):
     return logging.getLogger(name)
@@ -45,5 +45,10 @@ def create_app(config_name):
     #注册major蓝图
     from .major  import  major as major_blueprint
     app.register_blueprint(major_blueprint)
+
+    #注册class蓝图
+    from .class_pkg import class_pkg as class_blueprint
+    app.register_blueprint(class_blueprint)
+
 
     return app

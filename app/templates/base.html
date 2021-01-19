@@ -86,9 +86,9 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url_for('student.student_add_form') }}"><i class="fa fa-circle-o"></i> 用户添加</a></li>
-                        <li><a href="{{ url_for('student.upload') }}"><i class="fa fa-circle-o"></i> 用户批量添加</a></li>
-                        <li><a href="{{ url_for('main.notifylist') }}"><i class="fa fa-circle-o"></i> 用户列表</a></li>
+                        <li><a href="{{ url_for('student.student_add_form') }}"><i class="fa fa-circle-o"></i> 添加学生</a></li>
+                        <li><a href="{{ url_for('student.upload') }}"><i class="fa fa-circle-o"></i> 批量导入学生</a></li>
+                        <li><a href="{{ url_for('main.notifylist') }}"><i class="fa fa-circle-o"></i> 学生列表</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -109,8 +109,8 @@
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url_for('main.notifyedit') }}"><i class="fa fa-circle-o"></i> 创建班级</a></li>
-                        <li><a href="{{ url_for('main.notifylist') }}"><i class="fa fa-circle-o"></i> 班级列表</a></li>
+                        <li><a href="{{ url_for('class.class_add_form') }}"><i class="fa fa-circle-o"></i> 创建班级</a></li>
+                        <li><a href="{{ url_for('class.class_list') }}"><i class="fa fa-circle-o"></i> 班级列表</a></li>
                         <li><a href="{{ url_for('major.major_add_form') }}"><i class="fa fa-circle-o"></i> 添加专业</a></li>
                         <li><a href="{{ url_for('major.major_list') }}"><i class="fa fa-circle-o"></i> 专业列表</a></li>
                     </ul>

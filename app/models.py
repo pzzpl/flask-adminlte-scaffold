@@ -60,7 +60,7 @@ class Major(BaseModel):
 #班级
 class Class(BaseModel):
     class_name = CharField() #班级名称
-    major = ForeignKeyField(Major,backref="classes") #班级外键
+    # major = ForeignKeyField(Major,backref="classes") #班级外键
 
 
 #学生

@@ -15,9 +15,19 @@
 
 {% block content %}
     <div class="col-md-6 col-md-offset-3">
-        <h3>上传表格</h3>
 
+        <div class="box box-primary" >
 
+            <h5 style="size: B4">请下载模板表格</h5>
+            <div class="box-body">
+
+                        <div class="col-md-6">
+                             <button type="button " id="dbutton"  class="btn  btn-success pull-right">下载表格</button>
+                        </div>
+            </div>
+
+        </div>
+{#------------------------------------------------------#}
         <div class="box box-primary">
             <form method="post"  enctype="multipart/form-data">
                 {{form.hidden_tag()}}
@@ -52,5 +62,20 @@
 
         </div>
 
+
+
+
     </div>
+    <script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script>
+        {#alert("dbutton");#}
+        $("#dbutton").click(function () {
+             window.open("/download");
+        })
+    </script>
+
+
+
 {% endblock %}
+

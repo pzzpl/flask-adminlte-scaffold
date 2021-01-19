@@ -38,7 +38,7 @@ class UploadForm(FlaskForm):
     )
     submit = SubmitField(
         render_kw={
-            'value': "上传",
+            'value': "导入",
             'class': 'btn btn-success pull-right'
         }
     )
