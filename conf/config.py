@@ -12,6 +12,11 @@ class Config:
     ITEMS_PER_PAGE = 10
     JWT_AUTH_URL_RULE = '/api/auth'
     DOWNLOAD_DIR = 'tpldir'
+    #ssh相关
+    SSH_HOST = "172.31.226.159"
+    SSH_USER = "root"
+    SSH_PWD = "hpcl6601"
+
     @staticmethod
     def init_app(app):
         pass

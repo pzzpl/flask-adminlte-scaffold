@@ -2,16 +2,22 @@ from . import student
 from .forms import StudentForm, UploadForm
 from flask import render_template, request, flash, make_response,send_file,send_from_directory
 from app import utils
+from flask_login import login_required, current_user
 from app.models import Student , Class,db,Major
 import pandas as pd
-import  xlrd
+import math
 import os
 from app import get_logger, get_config
-
+def queryOneMajorByName(mj_name):
+    try:
+        val = Major().select().where(Major.major_name == mj_name).get()
+    except:
+        return None
+    return val
 
 cfg = get_config()  # 获取全局配置文件
 
-@student.route('/student_add_form', methods=['GET', 'post'])
+@student.route('/student_add_form', methods=['GET', 'POST'])
 def student_add_form():
     stf = StudentForm()
     if request.method == 'GET':  # 进入添加列表
@@ -22,6 +28,23 @@ def student_add_form():
             utils.form_to_model(stf, data)  # 把表单数据编程模型，导入库
             #print(data)
             data.save()
+@student.route("/student_list",methods=['GET'])
+@login_required
+def student_list():
+    # 接收参数 ,无就用默认
+    page = int(request.args.get('page')) if request.args.get('page') else 1
+    length = int(request.args.get('length')) if request.args.get('length') else cfg.ITEMS_PER_PAGE
+    # 查询所有专业
+    query = Student.select()
+    total_count = query.count()
+    # 处理分页
+    if page: query = query.paginate(page, length)
+    # for it in utils.query_to_list(query):
+    #     print(it)
+    dict = {'content': utils.query_to_list(query), 'total_count': total_count,
+            'total_page': math.ceil(total_count / length), 'page': page, 'length': length}
+    return render_template("/student/student_list.html", form=dict, current_user=current_user)
+    pass
 """
 lzp 2020-12-11
 #这里用最笨的方法将excel表的学生信息，插入到数据库
@@ -35,6 +58,7 @@ lzp 2020-12-11
 附件：
     pandas官方API：https://pandas.pydata.org/pandas-docs/stable/reference/frame.html#indexing-iteration
 """
+
 def create_from_form(form):
     df = pd.read_excel('ufloder/'+form.file.data.filename)
     # data = df.head()  # 默认读取前5行的数据
@@ -52,30 +76,41 @@ def create_from_form(form):
 
         i = 0
         while(i < len(data)):
-            print(data.iloc[i])
+            # print(data.iloc[i])
             obj = data.iloc[i]
             std = Student()
             std.student_name = obj['student_name']
             std.student_number = obj['student_number']
+            std.student_psw = obj['student_number']
             #保存其专业
             mj = Major()
             mj.major_name = obj['major_name']
-            mj_tmp = Major().select().where(Major.major_name == obj['major_name'])
-            if(mj_tmp):
+
+            '''
+            # 由于查询不存在时，是抛出异常（菜！~~~）,另外写一个函数使得有异常时返回None
+            '''
+            mj_db = queryOneMajorByName(obj['major_name'])
+
+
+            if(mj_db != None ): #已经有这个专业
+                std.student_major = mj_db.id
+            else: #没有这个专业，插入这个专业，然后保存到std中
                 mj.save()
+                std.student_major = mj.get_id()
             print(mj.get_id())
-            std.student_major = mj.get_id()
+
             std.student_class = class_pkg.get_id()
             #保存学生
             std.save()
             i+=1
-    print("success")
+    # print("success")
 
     '''
     
     '''
 
 @student.route('/upload/', methods=['POST', 'GET'])
+@login_required
 def upload():
     # 实例化表单
     form = UploadForm()
@@ -92,6 +127,7 @@ def upload():
     return render_template('upload.html', form=form)
 
 @student.route('/download',methods=['POST', 'GET'])
+@login_required
 def download():
     # print(app.instance_path)
     # dirpath = os.path.join(app.root_path, 'tpldir/')  # 这里是下在目录，从工程的根目录写起，比如你要下载static/js里面的js文件，这里就要写“static/js”

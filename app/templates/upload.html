@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}upload{% endblock %}
+{% block title %}导入账号{% endblock %}
 {#{% import 'bootstrap/wtf.html' as wtf %}#}
 {% block navbar %}
 <section class="content-header">
-    <h1>batch create</h1>
+    <h1>导入账号</h1>
     <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> 当前位置</li>
-        <li class="active">batch create</li>
+        <li class="active">批量导入</li>
 
     </ol>
 </section>
@@ -18,7 +18,7 @@
 
         <div class="box box-primary" >
 
-            <h5 style="size: B4">请下载模板表格</h5>
+            <h5>请下载模板表格</h5>
             <div class="box-body">
 
                         <div class="col-md-6">
@@ -28,7 +28,14 @@
 
         </div>
 {#------------------------------------------------------#}
+
+
         <div class="box box-primary">
+    <div class="progress" style="visibility: hidden">
+          <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+            导入进入:60%
+          </div>
+    </div>
             <form method="post"  enctype="multipart/form-data">
                 {{form.hidden_tag()}}
                 <div class="box-header with-border">
@@ -54,7 +61,7 @@
                         <div class="form-group">
                             <label>{{form.file.label}}</label>
                             {{form.file()}}
-                            {{form.submit(class_="btn btn-primary pull-right")}}
+                            {{form.submit(class_="btn pushin btn-primary pull-right")}}
                         </div>
                     </div>
                 </div>
@@ -69,10 +76,28 @@
     <script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script>
+        {#每隔一段时间，跟新进度条#}
+        function  startprog() {
+
+            {#window.setInterval(showMsgIcon, 1000*num);#}
+            var prog = 0;
+            {#获得总共的数据量#}
+
+            {#只要不等就不停地问进度#}
+            {#while(prog != 100){#}
+            {##}
+
+
+        }
         {#alert("dbutton");#}
         $("#dbutton").click(function () {
              window.open("/download");
         })
+
+        {#$(".pushin").click(function () {#}
+        {#    $(".progress").css("visibility","hidden");#}
+        {#    startprog(); )#}
+
     </script>
 
 

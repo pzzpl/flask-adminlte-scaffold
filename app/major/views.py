@@ -3,7 +3,7 @@ from app import get_logger, get_config
 import math
 from flask_login import login_required, current_user
 from .forms import MajorForm
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash
 from app import utils
 from app.models import Major
 
