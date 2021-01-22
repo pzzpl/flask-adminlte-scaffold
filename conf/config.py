@@ -13,9 +13,13 @@ class Config:
     JWT_AUTH_URL_RULE = '/api/auth'
     DOWNLOAD_DIR = 'tpldir'
     #ssh相关
-    SSH_HOST = "172.31.226.159"
+    # SSH_HOST = "172.31.226.159" #生产环境
+    SSH_HOST = "172.31.226.12" #测试环境
     SSH_USER = "root"
     SSH_PWD = "hpcl6601"
+
+    #服务器批量创建容器的shell脚本名称xx.sh
+    SCRIPT_NAME = "exec.sh"
 
     @staticmethod
     def init_app(app):

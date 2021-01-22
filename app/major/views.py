@@ -63,8 +63,8 @@ def searchMajor(criteria):
     length = cfg.ITEMS_PER_PAGE
     # 处理分页
     if page: query = query.paginate(page, length)
-    for it in utils.query_to_list(query):
-        print(it)
+    # for it in utils.query_to_list(query):
+    #     print(it)
     dict = {'content': utils.query_to_list(query), 'total_count': total_count,
             'total_page': math.ceil(total_count / length), 'page': page, 'length': length}
     # return render_template("/major/major_list.html", form=dict, current_user=current_user)

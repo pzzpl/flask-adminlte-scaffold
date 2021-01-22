@@ -49,8 +49,12 @@ def create_app(config_name):
     #注册class蓝图
     from .class_pkg import class_pkg as class_blueprint
     app.register_blueprint(class_blueprint)
-
+    #注册分号蓝图
     from .alloc import alloc as alloc_blueprint
     app.register_blueprint(alloc_blueprint)
+
+    #注册user蓝图
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint)
 
     return app

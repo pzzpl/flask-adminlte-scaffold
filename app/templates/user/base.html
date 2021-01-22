@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    {% block css %}{% endblock %}
+</head>
+<body>
+<div class="wapper">
+    <header class="main-header">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">
+{#                  <img alt="osep" src="...">#}
+                  OSEP
+              </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+              <ul id= "tabs_left" class="nav navbar-nav">
+                <li ><a href="{{ url_for("user.u_index") }}">首页</a></li>
+                  {% if session['user'] %}
+                    <li><a href="{{ url_for("user.info_detail") }}">实验平台</a></li>
+                  {% else %}
+                    <li><a data-toggle="modal" data-target="#loginwindow" href="#">实验平台</a></li>
+                  {% endif %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+
+{#              <form class="navbar-form navbar-left">#}
+{#                <div class="form-group">#}
+{#                  <input type="text" class="form-control" placeholder="Search">#}
+{#                </div>#}
+{#                <button type="submit" class="btn btn-default">Submit</button>#}
+{#              </form>#}
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">账号</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">账号信息<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+    </header>
+
+    <div class="content-wrapper">
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+
+
+<!-- 登录窗口，如果没登录，点击分享,实验平台,账号就会出来 -->
+<div class="modal fade" id="loginwindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">请登录</h4>
+            </div>
+            <p id="message" style="color: #0d6aad"></p>
+            <div class="modal-body">
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">学号</label>
+                        <input type="text"  name="student_number" class="form-control"  placeholder="请输入学号">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">密码</label>
+                        <input type="password"  name="student_pwd" class="form-control"  placeholder="请输入密码">
+                      </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="u_login_btn" class="btn btn-primary">登录</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+</div>
+
+{#    <footer class="footer">#}
+{#       <div class="jumbotron text-center" style="margin-bottom:0px">#}
+{#            <p>高性能系统软件组</p>#}
+{#        </div>#}
+{#     </footer>#}
+<script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
+<script src="{{ url_for('static', filename='js/global.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/pace/pace.min.js') }}"></script>
+{% block scripts %}{% endblock %}
+{#by lzp-1-22#}
+<script type="application/javascript">
+        /*
+        $("#tabs_left").on("click","li",function() {//取被点击的li的this，把兄弟的active去掉，自己加this
+            //alert($(this).text());
+            $(this).siblings().removeClass("active");
+            $(this).addClass("active");
+        })
+        */
+        $("#u_login_btn").click(function(){
+            var student_number = $("input[ name='student_number' ]").val();
+            var student_pwd = $("input[ name='student_pwd' ]").val();
+            data ={
+                "student_number" : student_number,
+                "student_psw" :student_pwd
+            }
+
+            restTemplate("POST","/u_login",data,function(data){
+                var t = eval(data); //json字符串转换成dict
+                $("#message").text(t[0]['msg']);
+                if(t[1] == 200){
+
+                    window.location.href = '{{ url_for("user.u_index") }}';
+                }
+            });
+        })
+
+</script>
+</body>
+</html>

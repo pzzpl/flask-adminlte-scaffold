@@ -100,18 +100,11 @@ class Container(BaseModel):
 
     container_desc = CharField() #容器的描述
 
-
-
-
-# #教师
-# class Teacher(BaseModel):
-#     teacher_name = CharField() #教师名称
-#     teacher_psw = CharField() #教师登录密码
-#     teacher_email = CharField() #教师邮箱
-#     status = BooleanField(default=True)  # 生效标识
-#     teacher_number = CharField() #教师职工号
-
-
+#分号表
+class Numbertable(BaseModel):
+    port = CharField()#port
+    host = CharField()#host
+    student_id = ForeignKeyField(Student,backref="ports") #stu_id
 
 #实验课程
 class Course(BaseModel):
@@ -133,7 +126,7 @@ def load_user(user_id):
 # 建表
 def create_table():
     db.connect()
-    db.create_tables([CfgNotify, User,Class,Major,Student,Course,Container,SC,Mirror])
+    db.create_tables([CfgNotify, User,Class,Major,Student,Course,Container,SC,Mirror,Numbertable])
 
 
 

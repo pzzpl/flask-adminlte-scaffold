@@ -22,16 +22,16 @@
         {% if data%}
         <table class="table table-bordered table-striped table-hover">
             <tr>
-                <th>镜像ID</th>
-                <th>镜像名称</th>
-                <td>选择该镜像</td>
+                <th>姓名</th>
+
+                <td>容器id</td>
             </tr>
-            {% for row in data %}
+            {% for row in data.std_info %}
             <tr>
-                <td>{{row.image_id}}</td>
-                <td>{{row.image_name}}</td>
-                <td><button class="btn btn-success"><a href="{{ url_for('alloc.alloc_second',image_id = row.image_id) }}" methods="get">选择</a></button></td>
+                <td>{{row.student_name}}</td>
+                <td>{{baseport}}</td>
             </tr>
+                {{ baseport }}
             {% endfor %}
         </table>
         {% endif %}

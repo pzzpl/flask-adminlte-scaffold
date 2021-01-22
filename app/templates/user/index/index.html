@@ -1,0 +1,63 @@
+{% extends "/user/base.html" %}
+{% block content %}
+    <div class="box box-primary">
+        <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                  <h2>平台公告</h2>
+
+                </div>
+
+                <div class="col-sm-8">
+                    <div class = "row">
+                        <h1>分享学习经验和问题</h1>
+                        <div class="form-group">
+                            {% if  session['user'] %}
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#sharewindow" placeholder="有什么话想说">
+                            {% else %}
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#loginwindow" placeholder="有什么话想说">
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                <!-- 分享窗口 -->
+<div class="modal fade" id="sharewindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">分享你的分享</h4>
+            </div>
+            <div class="modal-body">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+                    <div class = "row" >
+                            <div class="col-sm-1">
+                                <a>用户名称:</a>
+                            </div>
+                            <div class="col-sm-11">
+                                <p>得我if金额荣if发动机山东if机二法尔范决案私人飞机四大分卫</p>
+                            </div>
+                    </div>
+                </div>
+              </div>
+
+
+
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

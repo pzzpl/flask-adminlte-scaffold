@@ -1,6 +1,6 @@
 from . import student
 from .forms import StudentForm, UploadForm
-from flask import render_template, request, flash, make_response,send_file,send_from_directory
+from flask import render_template, request, flash, make_response, send_file, send_from_directory, redirect, url_for
 from app import utils
 from flask_login import login_required, current_user
 from app.models import Student , Class,db,Major
@@ -64,9 +64,9 @@ def create_from_form(form):
     # data = df.head()  # 默认读取前5行的数据
     data = df.iloc[5:,0:3]
 
-    print("获取到所有的值:\n{0}".format(data))  # 格式化输出
+    # print("获取到所有的值:\n{0}".format(data))  # 格式化输出
     data = data.rename(columns={'深圳大学研究生Linux操作系统点名册':'student_number', 'Unnamed: 1':'student_name','Unnamed: 2':'major_name'})
-    print("获取到所有的值:\n{0}".format(data))  # 格式化输出
+    # print("获取到所有的值:\n{0}".format(data))  # 格式化输出
 
     #开启事务
     with db.atomic() as tx:
@@ -103,11 +103,8 @@ def create_from_form(form):
             #保存学生
             std.save()
             i+=1
-    # print("success")
 
-    '''
-    
-    '''
+
 
 @student.route('/upload/', methods=['POST', 'GET'])
 @login_required
@@ -122,8 +119,8 @@ def upload():
         form.file.data.save('ufloder/' + filename)
         print(form.file.data)
         flash("上传成功", 'ok')
-        student_data = create_from_form(form)
-        return render_template('/upload_data_List.html/',form = student_data) #跳到上传列表展示页面
+        create_from_form(form)
+        return redirect(url_for("student.student_list"))
     return render_template('upload.html', form=form)
 
 @student.route('/download',methods=['POST', 'GET'])

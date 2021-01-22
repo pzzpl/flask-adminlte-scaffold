@@ -39,4 +39,3 @@ def class_list():
     dict = {'content': utils.query_to_list(query), 'total_count': total_count,
             'total_page': math.ceil(total_count / length), 'page': page, 'length': length}
     return render_template("/class/class_list.html", form=dict, current_user=current_user)
-    pass
