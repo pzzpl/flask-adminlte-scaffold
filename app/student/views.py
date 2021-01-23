@@ -8,14 +8,14 @@ import pandas as pd
 import math
 import os
 from app import get_logger, get_config
+
+cfg = get_config()  # 获取全局配置文件
 def queryOneMajorByName(mj_name):
     try:
         val = Major().select().where(Major.major_name == mj_name).get()
     except:
         return None
     return val
-
-cfg = get_config()  # 获取全局配置文件
 
 @student.route('/student_add_form', methods=['GET', 'POST'])
 def student_add_form():
@@ -71,7 +71,7 @@ def create_from_form(form):
     #开启事务
     with db.atomic() as tx:
         class_pkg = Class() #创建一个班级
-        class_pkg.class_name = "计算机"+ str(Class.select().count()) + "班"
+        class_pkg.class_name = "操作系统"+ str(Class.select().count()) + "班"
         class_pkg.save()
 
         i = 0

@@ -2,6 +2,47 @@
 {% block content %}
     <div class="box box-primary">
         <div class="container">
+            <div class="row" >
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                              <div class="col-md-4"><h1>容器列表</h1></div>
+                        <div class="col-md-8">
+
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+            {% for row in data %}
+                        <div class="row">
+                      <div class="col-md-6 col-md-offset-3">
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <span>容器地址:</span>
+                                      <a href="{{ row }}" target="_blank">容器</a>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <a>资料下载</a>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div>
+                                          <p>说明:点击链接进入容器</p>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                      </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        -------------------------------------------------------------------------------------------
+                    </div>
+                </div>
+            {% endfor %}
 
 
 

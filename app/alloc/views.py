@@ -5,8 +5,8 @@ from . import alloc
 import paramiko
 from io import StringIO
 from flask import render_template, request, flash, make_response, send_file, send_from_directory, url_for, redirect
-from app.models import Class, Student, Numbertable
-import pandas as pd
+from app.models import Class, Student, Numbertable,Alloc,db
+
 
 cfg = get_config()  # 获取全局配置文件
 
@@ -101,18 +101,31 @@ def alloc_first():
         flash("服务器网络可能出问题，或者是docker出问题了，请您去看看")
     return render_template("/allocation/alloc_info.html", data=data)
 
-
-def dumpStu2Port(baseport , class_id,query):
+'''
+把分号情况dump到db
+第一步，创建alloc记录
+第二部创建nb记录
+'''
+def dumpAllocPort2db(baseport , class_id,query):
 
     # students = utils.query_to_list(query)
-    port_cnt = int(baseport)
-    for row in query:
-        nb = Numbertable()
-        nb.student_id = row.id
-        nb.host = cfg.SSH_HOST
-        nb.port = str(port_cnt)
-        port_cnt += 1
-        nb.save()
+    # 开启事务
+    with db.atomic() as tx:
+        #创建alloc记录
+        alloc = Alloc();
+        alloc.class_id = class_id
+        alloc.specification = "点击按钮进入容器"
+        alloc.save()
+        port_cnt = int(baseport)
+        for row in query:
+            nb = Numbertable()
+            nb.student_id = row.id
+            nb.class_id = class_id
+            nb.alloc_id = alloc.get_id()
+            nb.host = cfg.SSH_HOST
+            nb.port = str(port_cnt)
+            port_cnt += 1
+            nb.save()
 
 
 
@@ -141,7 +154,7 @@ def alloc_second():
     if(len(row_list ) - 1  == total_count):
         flash("分配成功")
         # 下面是创建成功
-        dumpStu2Port(protbase, cid, query)
+        dumpAllocPort2db(protbase, cid, query)
     else:
         flash("分配失败")
     #展示 分配情况

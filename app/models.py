@@ -63,6 +63,7 @@ class Class(BaseModel):
     # major = ForeignKeyField(Major,backref="classes") #班级外键
 
 
+
 #学生
 class Student(BaseModel):
     student_name = CharField() #学生名称
@@ -88,7 +89,6 @@ class Mirror(BaseModel):
     mirror_createtime = DateTimeField() #镜像的创建时间(系统扫描到的时间
     docker_image_id = CharField() #镜像的id（在docker中的
 
-
 #容器
 class Container(BaseModel):
     container_name = CharField() #容器名称
@@ -99,12 +99,19 @@ class Container(BaseModel):
     container_port4 = CharField()  # 端口映射4
 
     container_desc = CharField() #容器的描述
-
+class Alloc(BaseModel):
+    '''
+        added by lzp 2020-1-23 用于扩展容器使用说明
+    '''
+    specification = CharField()  # 容器使用说明
+    file_name = CharField()  # 文件路径名称
+    class_id = ForeignKeyField(Class,backref="allocs")
 #分号表
 class Numbertable(BaseModel):
-    port = CharField()#port
-    host = CharField()#host
+    port = CharField() #port
+    host = CharField() #host
     student_id = ForeignKeyField(Student,backref="ports") #stu_id
+    alloc_id = ForeignKeyField(Alloc,backref="containers") # 分号所属的班级
 
 #实验课程
 class Course(BaseModel):
@@ -126,7 +133,7 @@ def load_user(user_id):
 # 建表
 def create_table():
     db.connect()
-    db.create_tables([CfgNotify, User,Class,Major,Student,Course,Container,SC,Mirror,Numbertable])
+    db.create_tables([User,Class,Major,Student,Numbertable,Alloc])
 
 
 

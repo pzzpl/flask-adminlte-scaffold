@@ -6,8 +6,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     {% block css %}{% endblock %}
+{#<style type="text/css">#}
+{#    .bg {#}
+{#       background:url("../../static/images/background.png") no-repeat center;#}
+{#       background-size:contain;#}
+{#    }#}
+{#</style>#}
 </head>
 <body>
+ <!-- 背景-->
 <div class="wapper">
     <header class="main-header">
         <nav class="navbar navbar-default">
@@ -60,7 +67,11 @@
 {#              </form>#}
 
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">账号</a></li>
+                  {% if session['user'] %}
+                        <li><a href="#">{{session['user']}}</a></li>
+                  {% else %}
+                    <li><a href="#">账号</a></li>
+                  {% endif %}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">账号信息<span class="caret"></span></a>
                   <ul class="dropdown-menu">

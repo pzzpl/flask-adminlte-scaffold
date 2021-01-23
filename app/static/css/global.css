@@ -1,3 +1,7 @@
+html {
+       background-image:url("../images/background.png")  ;
+       background-size : contain;
+}
 .select2 {
     width: 100%;
 }

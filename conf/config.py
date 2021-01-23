@@ -18,6 +18,15 @@ class Config:
     SSH_USER = "root"
     SSH_PWD = "hpcl6601"
 
+    #生成webssh的host 和port
+    WEBSSH_HOST = "172.31.225.136"
+    WEBSSH_PORT= "8888"
+
+    #容器账户名 密码
+    CONTAINER_USER = "root"
+    CONTAINER_PASSWORD = "szuxv6"
+
+
     #服务器批量创建容器的shell脚本名称xx.sh
     SCRIPT_NAME = "exec.sh"
 
